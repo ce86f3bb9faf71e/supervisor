@@ -173,9 +173,10 @@ class SystemNamespaceRPCInterface:
         return methods
 
     def listMethods(self):
-        """ Return an array listing the available method names
+        """Return a list of the available method names.
 
-        @return array result  An array of method names available (strings).
+        :returns: A list of method names available (strings).
+        :rtype: list
         """
         methods = self._listMethods()
         keys = list(methods.keys())
@@ -183,10 +184,11 @@ class SystemNamespaceRPCInterface:
         return keys
 
     def methodHelp(self, name):
-        """ Return a string showing the method's documentation
+        """Return a string showing the method's documentation.
 
-        @param string name   The name of the method.
-        @return string result The documentation for the method name.
+        :param str name: The name of the method.
+        :returns: The documentation for the method name.
+        :rtype: str
         """
         methods = self._listMethods()
         for methodname in methods.keys():
@@ -195,13 +197,14 @@ class SystemNamespaceRPCInterface:
         raise RPCError(Faults.SIGNATURE_UNSUPPORTED)
 
     def methodSignature(self, name):
-        """ Return an array describing the method signature in the
-        form [rtype, ptype, ptype...] where rtype is the return data type
-        of the method, and ptypes are the parameter data types that the
-        method accepts in method argument order.
+        """Return a list describing the method signature in the
+        form ``[rtype, ptype, ptype...]`` where ``rtype`` is the return
+        data type of the method, and ``ptypes`` are the parameter data
+        types that the method accepts in method argument order.
 
-        @param string name  The name of the method.
-        @return array result  The result.
+        :param str name: The name of the method.
+        :returns: The method signature list.
+        :rtype: list
         """
         methods = self._listMethods()
         for method in methods:
@@ -220,16 +223,17 @@ class SystemNamespaceRPCInterface:
         raise RPCError(Faults.SIGNATURE_UNSUPPORTED)
 
     def multicall(self, calls):
-        """Process an array of calls, and return an array of
-        results. Calls should be structs of the form {'methodName':
-        string, 'params': array}. Each result will either be a
-        single-item array containing the result value, or a struct of
-        the form {'faultCode': int, 'faultString': string}. This is
-        useful when you need to make lots of small calls without lots
-        of round trips.
+        """Process an list of calls, and return an list of
+        results. Calls should be a dict of the form ``{'methodName':
+        str, 'params': list}``. Each result will either be a
+        single-item list containing the result value, or a dict of
+        the form ``{'faultCode': int, 'faultString': str}``. This
+        is useful when you need to make lots of small calls without
+        lots of round trips.
 
-        @param array calls  An array of call requests
-        @return array result  An array of results
+        :param list calls: A list of call requests.
+        :returns: A list of results.
+        :rtype: list
         """
         remaining_calls = calls[:] # [{'methodName':x, 'params':x}, ...]
         callbacks = [] # always empty or 1 callback function only
